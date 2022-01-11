@@ -7,16 +7,6 @@ import os
 ops = [operator.add, operator.sub, operator.truediv, operator.mul]
 ops_str = [" + ", " - ", "/", " x "]
 
-def trimDict(d):
-
-    #for timming duplicate formula results in each iteration
-    new_d = {}
-    temp = []
-    for key, val in d.items():
-        if val not in temp:
-            temp.append(val)
-            new_d[key] = int(val)
-    return new_d
 
 class FormChallenge:
 
@@ -71,6 +61,18 @@ class FormChallenge:
         for i in self.digs:
             digits = digits + str(i)
         return digits
+    
+def trimDict(d):
+
+    #for timming duplicate formula results in each iteration
+    new_d = {}
+    temp = []
+    for key, val in d.items():
+        if val not in temp:
+            temp.append(val)
+            new_d[key] = int(val)
+    return new_d
+
 
 def Run(no_digs, first_x_integers, digits=None):
 
