@@ -8,4 +8,4 @@ The user gets to decide how many digits they would like to use(i.e 1-9), they ca
 
 The program outputs to a csv with each formula and outputs the maximum amount of operators used to generate each integer. The goal being to match or beat the program by using the same or fewer operators than it does.
 
-Future development of this program will include trying to find and predict the optimal(least operators used) set or sets of digits for every positive integer.
+Future development of this program could include trying to find and predict the optimal(least operators used) set or sets of digits for every positive integer.
