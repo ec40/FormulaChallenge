@@ -111,7 +111,7 @@ def Run(no_digs, first_x_integers, digits=None):
         check_in = float(input("x to exit, get any formula generated>> "))
         if check_in == 'x' or check_in == 'X':
           break
-        elif check_in in range(first_x_integers):
+        elif check_in in range(first_x_integers + 1):
           for key, val in i.items():
             if float(check_in) == val:
               print(key)
