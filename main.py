@@ -34,18 +34,18 @@ class FormChallenge:
 
         for operations in range(4):
             for k in range(len(self.digs)):
-                if self.digs[k] in self.ints and self.digs[
-                        k] not in self.form_dict.values():
+                if self.digs[k] in self.ints and self.digs[k] not in self.form_dict.values():
                     self.form_dict[str(self.digs[k])] = self.digs[k]
                 for j in range(len(running_keys)):
                     result = ops[operations](running_list[j], self.digs[k])
-                    self.running_dict["(" + str(running_keys[j]) + ops_str[operations] + str(self.digs[k]) + ")"] = result
+                    if result not in self.running_dict.values() and (type(result) == int or result.is_integer):
+                        self.running_dict["(" + str(running_keys[j]) + ops_str[operations] + str(self.digs[k]) + ")"] = result
                     if result in self.ints and result not in self.form_dict.values():
-                        self.form_dict["(" + str(running_keys[j]) + ops_str[operations] +str(self.digs[k]) + ")"] = result
+                        self.form_dict["(" + str(running_keys[j]) + ops_str[operations] + str(self.digs[k]) + ")"] = result
+
                     if len(self.form_dict) >= self.int_range + 1:
                         break
 
-        self.running_dict = trimDict(self.running_dict)
         return self.running_dict
 
     def getFormDict(self):
@@ -60,18 +60,8 @@ class FormChallenge:
             digits = digits + str(i) + " "
         return digits
 
-def trimDict(d):
-
-    new_d = {}
-    temp = []
-    for key, val in d.items():
-        if val not in temp:
-            temp.append(val)
-            new_d[key] = int(val)
-    return new_d
 
 def Run(no_digs, first_x_integers, digits=None):
-
     temp_dict = {}
     if digits:
         for dig in digits:
@@ -79,7 +69,7 @@ def Run(no_digs, first_x_integers, digits=None):
         x = FormChallenge(no_digs, first_x_integers, digits)
         x.running_dict = temp_dict
     else:
-        x = FormChallenge(no_digs, first_x_integers, digits)
+        x = FormChallenge(no_digs, first_x_integers)
         temp_dict = (x.getRanDigs())
 
     i = x.getForms(temp_dict)
@@ -107,21 +97,21 @@ def Run(no_digs, first_x_integers, digits=None):
             i = x.getForms(i)
 
     while True:
-      try:
-        check_in = float(input("x to exit, get any formula generated>> "))
-        if check_in == 'x' or check_in == 'X':
-          break
-        elif check_in in range(first_x_integers + 1):
-          for key, val in i.items():
-            if float(check_in) == val:
-              print(key)
-        else:
-          print("outside range")
-          for key, val in i.items():
-            if float(check_in) == val:
-              print("rough formula: "+key)
-      except:
-        print("Try again!")
+        try:
+            check_in = input("x to exit, get any formula generated>> ")
+            if check_in == 'x' or check_in == 'X':
+                break
+            elif int(check_in) in range(first_x_integers + 1):
+                for key, val in i.items():
+                    if int(check_in) == val:
+                        print(key)
+            else:
+                print("Integer outside range")
+                for key, val in i.items():
+                    if int(check_in) == val:
+                        print("Associated formula: " + key)
+        except:
+            print("Try again!")
 
 
 def main():
@@ -129,7 +119,12 @@ def main():
     f.truncate()
     f.close()
 
-    int_range = int(input("What number would you like to go up to? "))
+    while True:
+        try:
+            int_range = int(input("What number would you like to go up to? "))
+            break
+        except:
+            print("Invalid input")
 
     no_digs = 0
     while True:
@@ -139,7 +134,6 @@ def main():
             no_digs = int(input("Enter number of digits(1-9) "))
 
     while True:
-
         j = input("Would you like to pick your digits?(y/n) ")
         if j == "y" or j == "Y":
             digs = []
